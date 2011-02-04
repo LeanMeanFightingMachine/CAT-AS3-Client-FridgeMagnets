@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="AIR Build File">
+
+	<!-- 
+	
+		Run > External Tools > External Tool Configurations > Run in the Same JRE as Workspace
+	
+	-->
+
+	<!-- Begin Edit -->
+
+	<property name="project"	value="CAT - FridgeMagnets"/>
+	<property name="filename"	value="cat-fridge-magnets"/>
+	<property name="main"		value="uk/co/lmfm/cat/client/fridgemagnets/FridgeMagnets.as"/>
+	<property name="sdk"		value="/Applications/FDT/plugins/com.powerflasher.fdt.shippedFlexSDK_4.1.0.16076/flex"/>
+	<property name="org-name"	value="Lean Mean Fighting Machine"/>
+	<property name="org-unit"	value="Development"/>
+	<property name="password"	value="L3anM4an?"/>
+	<property name="country"	value="GB"/>
+
+	<!-- End Edit -->
+
+	<property name="src"		value="${basedir}/src/"/>
+	<property name="lib"		value="${basedir}/lib/"/>
+	<property name="bin"		value="${basedir}/bin/"/>
+	<property name="adl"		value="${sdk}/bin/adl"/>
+	<property name="adt"		value="${sdk}/lib/adt.jar"/>
+	<property name="mxmlc"		value="${sdk}/bin/mxmlc"/>
+	<property name="assets"		value="${basedir}/assets/"/>
+	<property name="descriptor"	value="${assets}/application.xml"/>
+
+	<macrodef name="compile">
+		<attribute name="debug" default="true"/>
+		<attribute name="optimise" default="false"/>
+		<sequential>
+			<echo message="Compiling SWF"/>
+			<exec executable="${mxmlc}" failonerror="true">
+				<arg value="-debug=@{debug}"/>
+				<arg value="-optimize=@{optimise}"/>
+				<arg value="+flexlib=${sdk}/frameworks"/>
+				<arg value="+configname=air"/>
+				<arg value="-source-path=${src}"/>
+				<arg value="-source-path=${lib}"/>
+				<arg value="-library-path+=${lib}" />
+				<arg value="-library-path+=${assets}" />
+				<arg value="-file-specs=${basedir}/src/${main}"/>
+				<arg value="-static-link-runtime-shared-libraries=true"/>
+				<arg value="-output=${bin}/${filename}.swf"/>
+				<arg value="-warnings=true" />
+				<arg value="-strict=true" />
+			</exec>
+		</sequential>
+	</macrodef>
+
+	<macrodef name="package">
+		<attribute name="type" default="dmg"/>
+		<sequential>
+			<java jar="${adt}" fork="true" failonerror="true" maxmemory="512m">
+				<arg value="-package"/>
+				<arg value="-target"/>
+				<arg value="native"/>
+				<arg value="${bin}/${filename}.@{type}"/>
+				<arg value="${bin}/${filename}.air"/>
+			</java>
+		</sequential>
+	</macrodef>
+
+	<target name="1. Debug">
+		<compile debug="true"/>
+		<fdt.startDebugger projectname="${project}"/>
+		<exec executable="${adl}">
+			<arg value="${descriptor}"/>
+			<arg value="${bin}"/>
+		</exec>
+	</target>
+
+	<target name="2. Certificate">
+		<echo message="Generating certificate"/>
+		<java jar="${adt}" fork="true">
+			<arg value="-certificate"/>
+			<arg value="-cn"/>
+			<arg value="certificate"/>
+			<arg value="-ou"/>
+			<arg value="${org-unit}"/>
+			<arg value="-o"/>
+			<arg value="${org-name}"/>
+			<arg value="-c"/>
+			<arg value="${country}"/>
+			<arg value="2048-RSA"/>
+			<arg value="${assets}/certificate.pfx"/>
+			<arg value="${password}"/>
+		</java>
+	</target>
+
+	<target name="3. Package AIR">
+		<compile debug="false" optimise="true"/>
+		<echo message="Packaging AIR file"/>
+		<java jar="${adt}" fork="true" failonerror="true">
+			<arg value="-package"/>
+			<arg value="-storetype"/>
+			<arg value="pkcs12"/>
+			<arg value="-keystore"/>
+			<arg value="${assets}/certificate.pfx"/>
+			<arg value="-storepass"/>
+			<arg value="${password}"/>
+			<arg value="${bin}/${filename}.air"/>
+			<arg value="${descriptor}"/>
+			<arg value="-C"/>
+			<arg value="${bin}/"/>
+			<arg value="${filename}.swf"/>
+			<arg value="-C"/>
+			<arg value="${assets}"/>
+			<arg value="icons"/>
+		</java>
+	</target>
+
+	<target name="4. Package Installers" depends="3. Package AIR">
+		<echo message="Creating Mac installer"/>
+		<package type="dmg"/>
+		<echo message="Creating Windows installer"/>
+		<package type="exe"/>
+		<echo message="Creating Debian installer"/>
+		<package type="deb"/>
+		<echo message="Creating Redhat/Fedora/OpenSUSE installer"/>
+		<package type="rpm"/>
+	</target>
+
+</project>

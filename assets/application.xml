@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+
+<application xmlns="http://ns.adobe.com/air/application/2.0">
+
+	<id>CATFridgeMagnets</id>
+	<name>CAT Fridge Magnets Client</name>
+	<version>1.0.0</version>
+	<filename>cat-fridge-magnets</filename>
+	<copyright>Copyright (c) 2011 Lean Mean Fighting Machine LTD</copyright>
+	<description>
+		<text xml:lang="en">An AIR Appliction</text>
+	</description>
+	
+	<!--
+  		<installFolder>Acme</installFolder>
+		<programMenuFolder>Acme/Applications</programMenuFolder>
+	-->
+  
+	<initialWindow>
+		<title>CAT Fridge Magnets Client</title>
+		<content>cat-fridge-magnets.swf</content>
+		<systemChrome>standard</systemChrome>
+		<transparent>false</transparent>
+		<minimizable>true</minimizable>
+		<maximizable>true</maximizable>
+		<resizable>true</resizable>
+		<visible>true</visible>
+		<minSize>300 300</minSize>
+    	<maxSize>1000 1000</maxSize>
+    	<width>700</width>
+		<height>500</height>
+		<x>100</x>
+		<y>100</y>
+	</initialWindow>
+	
+	<customUpdateUI>false</customUpdateUI>
+	<allowBrowserInvocation>true</allowBrowserInvocation>
+	<supportedProfiles>extendedDesktop desktop</supportedProfiles>
+  
+	<icon>
+		<image16x16>icons/16x16.png</image16x16>
+		<image32x32>icons/32x32.png</image32x32>
+		<image48x48>icons/48x48.png</image48x48>
+		<image128x128>icons/128x128.png</image128x128>
+	</icon>
+	
+	<!--
+	<fileTypes>
+		<fileType>
+			<name>adobe.VideoFile</name>
+			<extension>avf</extension>
+			<description>Adobe Video File</description>
+			<contentType>application/vnd.adobe.video-file</contentType>
+			<icon>
+				<image16x16>icons/AIRApp_16.png</image16x16>      
+				<image32x32>icons/AIRApp_32.png</image32x32>      
+				<image48x48>icons/AIRApp_48.png</image48x48>     
+				<image128x128>icons/AIRApp_128.png</image128x128>
+			</icon>
+		</fileType>
+	</fileTypes>
+	-->
+  
+</application>
