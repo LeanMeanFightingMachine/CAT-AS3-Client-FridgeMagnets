@@ -16,6 +16,6 @@ package uk.co.lmfm.cat.client.fridgemagnets.services
 		function connect() : void;
 		function connected() : void;
 		function sendData(data : Array) : void;
-		function recieveData(data : String) : void;
+		function receiveData(data : String) : void;
 	}
 }

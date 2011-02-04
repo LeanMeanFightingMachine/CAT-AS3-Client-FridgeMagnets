@@ -8,6 +8,7 @@
  **/
 package uk.co.lmfm.cat.client.fridgemagnets
 {
+	import uk.co.lmfm.cat.client.fridgemagnets.services.OnlineSocketService;
 	import uk.co.lmfm.cat.client.fridgemagnets.controller.commands.MagnetUpdatedCommand;
 	import uk.co.lmfm.cat.client.fridgemagnets.controller.signals.MagnetUpdatedSignal;
 	import uk.co.lmfm.cat.client.fridgemagnets.controller.commands.AddMagnetCommand;
@@ -43,7 +44,7 @@ package uk.co.lmfm.cat.client.fridgemagnets
 			// Map proxies
 			
 			injector.mapSingleton(MagnetsProxy);
-			injector.mapSingletonOf(ISocketService, OfflineSocketService);
+			//injector.mapSingletonOf(ISocketService, OfflineSocketService);			injector.mapSingletonOf(ISocketService, OnlineSocketService);
 			injector.mapSingletonOf(ISocketDataParser, SocketDataParser);
 			
 			// Map signals

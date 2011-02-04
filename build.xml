@@ -9,7 +9,7 @@
 
 	<!-- Begin Edit -->
 
-	<property name="project"	value="CAT - FridgeMagnets"/>
+	<property name="project"	value="CAT-AS3-Client-FridgeMagnets"/>
 	<property name="filename"	value="cat-fridge-magnets"/>
 	<property name="main"		value="uk/co/lmfm/cat/client/fridgemagnets/FridgeMagnets.as"/>
 	<property name="sdk"		value="/Applications/FDT/plugins/com.powerflasher.fdt.shippedFlexSDK_4.1.0.16076/flex"/>
